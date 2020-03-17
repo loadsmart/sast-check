@@ -1,0 +1,15 @@
+name: 'SAST Check'
+description: 'Run SAST checks in your code'
+inputs:
+  path: 
+    description: 'Path to run SAST checks on'
+    required: false
+    default: '.'
+outputs:
+    result: 
+        description: 'Output of SAST checks'
+runs:
+  using: 'docker'
+  image: 'docker/Dockerfile'
+  args:
+    - ${{ inputs.path }}
