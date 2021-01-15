@@ -15,9 +15,8 @@ bandit -r -a vuln -ii -ll -x .git,.svn,.mvn,.idea,dist,bin,obj,backup,docs,tests
 # echo "::set-output name=result::${RESULT}"
 # exit ${EXITCODE}
 
-# Print Report on screen to programmers
+# Print Report on screen to developers
 cat "${TMP_REPORT}"
-
 
 if [ -z "$DD_CLIENT_API_KEY"] || [ -z "$GITHUB_REPOSITORY" ]
 then
@@ -35,48 +34,75 @@ else
   {
     "series": [
       {
-        "metric": "sast.${GITHUB_REPOSITORY}.confidence_high",
+        "metric": "security.sast.execution",
+        "points": [
+          [
+            "${NOW}",
+            1
+          ]
+        ],
+        "tags":[
+            "repo:${GITHUB_REPOSITORY}"
+        ]
+      },
+      {
+        "metric": "security.sast.results.confidence_high",
         "points": [
           [
             "${NOW}",
             ${confidence_high}
-          ]
+          ],
+        ],
+        "tags":[
+            "repo:${GITHUB_REPOSITORY}"
         ]
       },
       {
-        "metric": "sast.${GITHUB_REPOSITORY}.confidence_medium",
+        "metric": "security.sast.results.confidence_medium",
         "points": [
           [
             "${NOW}",
             ${confidence_medium}
           ]
+        ],
+        "tags":[
+            "repo:${GITHUB_REPOSITORY}"
         ]
       },
       {
-        "metric": "sast.${GITHUB_REPOSITORY}.severity_high",
+        "metric": "security.sast.results.severity_high",
         "points": [
           [
             "${NOW}",
             ${severity_high}
           ]
+        ],
+        "tags":[
+            "repo:${GITHUB_REPOSITORY}"
         ]
       },
       {
-        "metric": "sast.${GITHUB_REPOSITORY}.severity_medium",
+        "metric": "security.sast.results.severity_medium",
         "points": [
           [
             "${NOW}",
             ${severity_medium}
           ]
+        ],
+        "tags":[
+            "repo:${GITHUB_REPOSITORY}"
         ]
       },
       {
-        "metric": "sast.${GITHUB_REPOSITORY}.loc",
+        "metric": "security.sast.results.loc",
         "points": [
           [
             "${NOW}",
             ${loc}
           ]
+        ],
+        "tags":[
+            "repo:${GITHUB_REPOSITORY}"
         ]
       }
     ]
