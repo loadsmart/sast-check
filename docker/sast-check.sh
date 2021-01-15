@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 export NOW="$(date +%s)"
 TMP_REPORT="$(mktemp)"
@@ -24,7 +24,7 @@ then
 else
   # Reading metrics and save to variables
   read confidence_high confidence_medium severity_high severity_medium loc \
-  <<(echo $(cat ${TMP_REPORT} | jq -r '.metrics._totals."CONFIDENCE.HIGH", .metrics._totals."CONFIDENCE.MEDIUM", \
+  < <(echo $(cat ${TMP_REPORT} | jq -r '.metrics._totals."CONFIDENCE.HIGH", .metrics._totals."CONFIDENCE.MEDIUM", \
   .metrics._totals."SEVERITY.HIGH", .metrics._totals."SEVERITY.MEDIUM", .metrics._totals.loc'))
 
   # Sending metrics to DataDog
