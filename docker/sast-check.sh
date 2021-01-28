@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 export NOW="$(date +%s)"
 TMP_REPORT="$(mktemp)"
@@ -23,9 +23,15 @@ then
   echo "\$DD_CLIENT_API_KEY or \$SGITHUB_REPOSITORY are empty. I can't send metrics to DataDog without this information!"
 else
   # Reading metrics and save to variables
-  read confidence_high confidence_medium severity_high severity_medium loc \
-  < <(echo $(cat ${TMP_REPORT} | jq -r '.metrics._totals."CONFIDENCE.HIGH", .metrics._totals."CONFIDENCE.MEDIUM", \
-  .metrics._totals."SEVERITY.HIGH", .metrics._totals."SEVERITY.MEDIUM", .metrics._totals.loc'))
+  #read confidence_high confidence_medium severity_high severity_medium loc \
+  #< <(echo $(cat ${TMP_REPORT} | jq -r '.metrics._totals."CONFIDENCE.HIGH", .metrics._totals."CONFIDENCE.MEDIUM", \
+  #.metrics._totals."SEVERITY.HIGH", .metrics._totals."SEVERITY.MEDIUM", .metrics._totals.loc'))
+
+  CONFIDENCE_HIGH=`cat ${TMP_REPORT} | jq -r '.metrics._totals."CONFIDENCE.HIGH"`
+  CONFIDENCE_MEDIUM=`cat ${TMP_REPORT} | jq -r '.metrics._totals."CONFIDENCE.MEDIUM"`
+  SEVERITY_HIGH=`cat ${TMP_REPORT} | jq -r '.metrics._totals."SEVERITY.HIGH"`
+  SEVERITY_MEDIUM=`cat ${TMP_REPORT} | jq -r '.metrics._totals."SEVERITY_MEDIUM"`
+  LOC=`cat ${TMP_REPORT} | jq -r '.metrics._totals."LOC"`
 
   # Sending metrics to DataDog
   curl -X POST "https://api.datadoghq.com/api/v1/series?api_key=${DD_CLIENT_API_KEY}" \
@@ -50,7 +56,7 @@ else
         "points": [
           [
             "${NOW}",
-            ${confidence_high}
+            ${CONFIDENCE_HIGH}
           ],
         ],
         "tags":[
@@ -62,7 +68,7 @@ else
         "points": [
           [
             "${NOW}",
-            ${confidence_medium}
+            ${CONFIDENCE_MEDIUM}
           ]
         ],
         "tags":[
@@ -74,7 +80,7 @@ else
         "points": [
           [
             "${NOW}",
-            ${severity_high}
+            ${SEVERITY_HIGH}
           ]
         ],
         "tags":[
@@ -86,7 +92,7 @@ else
         "points": [
           [
             "${NOW}",
-            ${severity_medium}
+            ${SEVERITY_MEDIUM}
           ]
         ],
         "tags":[
@@ -98,7 +104,7 @@ else
         "points": [
           [
             "${NOW}",
-            ${loc}
+            ${LOC}
           ]
         ],
         "tags":[
