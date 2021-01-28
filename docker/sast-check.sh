@@ -31,7 +31,7 @@ else
   CONFIDENCE_MEDIUM=`cat ${TMP_REPORT} | jq -r '.metrics._totals."CONFIDENCE.MEDIUM"`
   SEVERITY_HIGH=`cat ${TMP_REPORT} | jq -r '.metrics._totals."SEVERITY.HIGH"`
   SEVERITY_MEDIUM=`cat ${TMP_REPORT} | jq -r '.metrics._totals."SEVERITY_MEDIUM"`
-  LOC=`cat ${TMP_REPORT} | jq -r '.metrics._totals."LOC"`
+  LOC=`cat ${TMP_REPORT} | jq -r '.metrics._totals.loc`
 
   # Sending metrics to DataDog
   curl -X POST "https://api.datadoghq.com/api/v1/series?api_key=${DD_CLIENT_API_KEY}" \
