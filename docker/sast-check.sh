@@ -27,11 +27,11 @@ else
   #< <(echo $(cat ${TMP_REPORT} | jq -r '.metrics._totals."CONFIDENCE.HIGH", .metrics._totals."CONFIDENCE.MEDIUM", \
   #.metrics._totals."SEVERITY.HIGH", .metrics._totals."SEVERITY.MEDIUM", .metrics._totals.loc'))
 
-  CONFIDENCE_HIGH=`cat ${TMP_REPORT} | jq -r '.metrics._totals."CONFIDENCE.HIGH"`
-  CONFIDENCE_MEDIUM=`cat ${TMP_REPORT} | jq -r '.metrics._totals."CONFIDENCE.MEDIUM"`
-  SEVERITY_HIGH=`cat ${TMP_REPORT} | jq -r '.metrics._totals."SEVERITY.HIGH"`
-  SEVERITY_MEDIUM=`cat ${TMP_REPORT} | jq -r '.metrics._totals."SEVERITY_MEDIUM"`
-  LOC=`cat ${TMP_REPORT} | jq -r '.metrics._totals.loc`
+  CONFIDENCE_HIGH=`cat ${TMP_REPORT} | jq -r '.metrics._totals."CONFIDENCE.HIGH"'`
+  CONFIDENCE_MEDIUM=`cat ${TMP_REPORT} | jq -r '.metrics._totals."CONFIDENCE.MEDIUM"'`
+  SEVERITY_HIGH=`cat ${TMP_REPORT} | jq -r '.metrics._totals."SEVERITY.HIGH"'`
+  SEVERITY_MEDIUM=`cat ${TMP_REPORT} | jq -r '.metrics._totals."SEVERITY_MEDIUM"'`
+  LOC=`cat ${TMP_REPORT} | jq -r '.metrics._totals.loc'`
 
   # Sending metrics to DataDog
   curl -X POST "https://api.datadoghq.com/api/v1/series?api_key=${DD_CLIENT_API_KEY}" \
