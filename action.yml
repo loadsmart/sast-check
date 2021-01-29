@@ -13,6 +13,3 @@ runs:
   image: 'docker/Dockerfile'
   args:
     - ${{ inputs.path }}
-  env:
-    DD_CLIENT_API_KEY: ${{ DD_CLIENT_API_KEY }}
-
