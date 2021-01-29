@@ -40,68 +40,8 @@ else
             "${NOW}",
             1
           ]
-        ]
+        ],
         "tags": [
-            "repo:${GITHUB_REPOSITORY}"
-        ]
-      },
-      {
-        "metric": "security.sast.results.confidence_high",
-        "points": [
-          [
-            "${NOW}",
-            "${CONFIDENCE_HIGH}"
-          ],
-        ]
-        "tags":[
-            "repo:${GITHUB_REPOSITORY}"
-        ]
-      },
-      {
-        "metric": "security.sast.results.confidence_medium",
-        "points": [
-          [
-            "${NOW}",
-            "${CONFIDENCE_MEDIUM}"
-          ]
-        ]
-        "tags":[
-            "repo:${GITHUB_REPOSITORY}"
-        ]
-      },
-      {
-        "metric": "security.sast.results.severity_high",
-        "points": [
-          [
-            "${NOW}",
-            "${SEVERITY_HIGH}"
-          ]
-        ]
-        "tags":[
-            "repo:${GITHUB_REPOSITORY}"
-        ]
-      },
-      {
-        "metric": "security.sast.results.severity_medium",
-        "points": [
-          [
-            "${NOW}",
-            "${SEVERITY_MEDIUM}"
-          ]
-        ]
-        "tags":[
-            "repo:${GITHUB_REPOSITORY}"
-        ]
-      },
-      {
-        "metric": "security.sast.results.loc",
-        "points": [
-          [
-            "${NOW}",
-            "${LOC}"
-          ]
-        ]
-        "tags":[
             "repo:${GITHUB_REPOSITORY}"
         ]
       }
