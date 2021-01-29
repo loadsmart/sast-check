@@ -36,7 +36,7 @@ else
   # Sending metrics to DataDog
   curl -X POST "https://api.datadoghq.com/api/v1/series?api_key=${DD_CLIENT_API_KEY}" \
   -H "Content-Type: application/json" \
-  -d @- <<EOF
+  -d @- << EOF
   {
     "series": [
       {
@@ -56,7 +56,7 @@ else
         "points": [
           [
             "${NOW}",
-            ${CONFIDENCE_HIGH}
+            "${CONFIDENCE_HIGH}"
           ],
         ],
         "tags":[
@@ -68,7 +68,7 @@ else
         "points": [
           [
             "${NOW}",
-            ${CONFIDENCE_MEDIUM}
+            "${CONFIDENCE_MEDIUM}"
           ]
         ],
         "tags":[
@@ -80,7 +80,7 @@ else
         "points": [
           [
             "${NOW}",
-            ${SEVERITY_HIGH}
+            "${SEVERITY_HIGH}"
           ]
         ],
         "tags":[
@@ -92,7 +92,7 @@ else
         "points": [
           [
             "${NOW}",
-            ${SEVERITY_MEDIUM}
+            "${SEVERITY_MEDIUM}"
           ]
         ],
         "tags":[
@@ -104,7 +104,7 @@ else
         "points": [
           [
             "${NOW}",
-            ${LOC}
+            "${LOC}"
           ]
         ],
         "tags":[
