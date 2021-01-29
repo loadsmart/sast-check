@@ -40,7 +40,7 @@ else
             "${NOW}",
             1
           ]
-        ],
+        ]
         "tags": [
             "repo:${GITHUB_REPOSITORY}"
         ]
@@ -52,7 +52,7 @@ else
             "${NOW}",
             "${CONFIDENCE_HIGH}"
           ],
-        ],
+        ]
         "tags":[
             "repo:${GITHUB_REPOSITORY}"
         ]
@@ -64,7 +64,7 @@ else
             "${NOW}",
             "${CONFIDENCE_MEDIUM}"
           ]
-        ],
+        ]
         "tags":[
             "repo:${GITHUB_REPOSITORY}"
         ]
@@ -76,7 +76,7 @@ else
             "${NOW}",
             "${SEVERITY_HIGH}"
           ]
-        ],
+        ]
         "tags":[
             "repo:${GITHUB_REPOSITORY}"
         ]
@@ -88,7 +88,7 @@ else
             "${NOW}",
             "${SEVERITY_MEDIUM}"
           ]
-        ],
+        ]
         "tags":[
             "repo:${GITHUB_REPOSITORY}"
         ]
@@ -100,7 +100,7 @@ else
             "${NOW}",
             "${LOC}"
           ]
-        ],
+        ]
         "tags":[
             "repo:${GITHUB_REPOSITORY}"
         ]
