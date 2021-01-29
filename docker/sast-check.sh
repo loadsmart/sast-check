@@ -34,7 +34,7 @@ else
   LOC=`cat ${TMP_REPORT} | jq -r '.metrics._totals.loc'`
 
   # Sending metrics to DataDog
-  curl -X POST "https://api.datadoghq.com/api/v1/series?api_key=${DD_CLIENT_API_KEY} \
+  curl -X POST "https://api.datadoghq.com/api/v1/series?api_key=$DD_CLIENT_API_KEY" \
   -H "Content-Type: application/json" \
   -d @- << EOF
   {
