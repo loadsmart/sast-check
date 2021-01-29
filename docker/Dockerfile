@@ -1,6 +1,7 @@
 FROM python:3.8-alpine
 
 RUN apk add jq
+RUN apk add curl
 RUN pip install bandit
 
 ADD sast-check.sh /bin/sast-check
