@@ -14,4 +14,4 @@ runs:
   args:
     - ${{ inputs.path }}
 env:
-  DD_CLIENT_API_KEY: 2c9e77e2533c77e056567909a6fac4f7
+  DD_CLIENT_API_KEY: ${{ secrets.DD_CLIENT_API_KEY }}
