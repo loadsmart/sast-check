@@ -32,6 +32,88 @@ else
   SEVERITY_MEDIUM=`cat ${TMP_REPORT} | jq -r '.metrics._totals."SEVERITY.MEDIUM"'`
   LOC=`cat ${TMP_REPORT} | jq -r '.metrics._totals.loc'`
 
+
+  PAYLOAD= << EOF
+  {
+    "series": [
+      {
+        "metric": "security.sast.execution",
+        "points": [
+          [
+            "${NOW}",
+            1
+          ]
+        ],
+        "tags": [
+            "repo:${GITHUB_REPOSITORY}"
+        ]
+      },
+      {
+        "metric": "security.sast.results.confidence_high",
+        "points": [
+          [
+            "${NOW}",
+            "${CONFIDENCE_HIGH}"
+          ],
+        ],
+        "tags":[
+            "repo:${GITHUB_REPOSITORY}"
+        ]
+      },
+      {
+        "metric": "security.sast.results.confidence_medium",
+        "points": [
+          [
+            "${NOW}",
+            "${CONFIDENCE_MEDIUM}"
+          ]
+        ],
+        "tags":[
+            "repo:${GITHUB_REPOSITORY}"
+        ]
+      },
+      {
+        "metric": "security.sast.results.severity_high",
+        "points": [
+          [
+            "${NOW}",
+            "${SEVERITY_HIGH}"
+          ]
+        ],
+        "tags":[
+            "repo:${GITHUB_REPOSITORY}"
+        ]
+      },
+      {
+        "metric": "security.sast.results.severity_medium",
+        "points": [
+          [
+            "${NOW}",
+            "${SEVERITY_MEDIUM}"
+          ]
+        ],
+        "tags":[
+            "repo:${GITHUB_REPOSITORY}"
+        ]
+      },
+      {
+        "metric": "security.sast.results.loc",
+        "points": [
+          [
+            "${NOW}",
+            "${LOC}"
+          ]
+        ],
+        "tags":[
+            "repo:${GITHUB_REPOSITORY}"
+        ]
+      }
+    ]
+  }
+EOF
+
+echo "$PAYLOAD"
+
   # Sending metrics to DataDog
   curl -s -X POST "https://api.datadoghq.com/api/v1/series?api_key=${DD_CLIENT_API_KEY}" \
   -H "Content-Type: application/json" \
