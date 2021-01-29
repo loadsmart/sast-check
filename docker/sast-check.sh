@@ -118,4 +118,4 @@ EOF
 fi
 
 # Removing temporary files
-rm -rf "${TMP_REPORT}"
+rm -rf ${TMP_REPORT}
