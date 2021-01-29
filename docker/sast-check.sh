@@ -19,9 +19,9 @@ bandit -r -a vuln -ii -ll -x .git,.svn,.mvn,.idea,dist,bin,obj,backup,docs,tests
 cat "${TMP_REPORT}"
 
 env
-echo "$DD_CLIENT_API_KEY"
+echo "${secrets.DD_CLIENT_API_KEY}"
 
-if [ -z "$DD_CLIENT_API_KEY"] || [ -z "$GITHUB_REPOSITORY" ]
+if [ -z "${secrets.DD_CLIENT_API_KEY}"] || [ -z "$GITHUB_REPOSITORY" ]
 then
   echo "\$DD_CLIENT_API_KEY or \$SGITHUB_REPOSITORY are empty. I can't send metrics to DataDog without this information!"
 else
@@ -37,7 +37,7 @@ else
   LOC=`cat ${TMP_REPORT} | jq -r '.metrics._totals.loc'`
 
   # Sending metrics to DataDog
-  curl -X POST "https://api.datadoghq.com/api/v1/series?api_key=${DD_CLIENT_API_KEY}" \
+  curl -X POST "https://api.datadoghq.com/api/v1/series?api_key=${secrets.DD_CLIENT_API_KEY}" \
   -H "Content-Type: application/json" \
   -d @- <<EOF
   {
