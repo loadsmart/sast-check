@@ -28,7 +28,9 @@ else
   SEVERITY_MEDIUM=$(cat ${TMP_REPORT} | jq -r '.metrics._totals."SEVERITY.MEDIUM"')
   LOC=$(cat ${TMP_REPORT} | jq -r '.metrics._totals.loc')
 
-  PAYLOAD=$(cat <<EOF
+  # Sending metrics to DataDog
+  curl -s -X POST "https://api.datadoghq.com/api/v1/series?api_key=${DD_CLIENT_API_KEY}" -H "Content-Type: application/json" \
+  -d @- << EOF
   {
     "series": [
       {
@@ -106,9 +108,7 @@ else
     ]
   }
 EOF
-)
- curl -s -X POST "https://api.datadoghq.com/api/v1/series?api_key=${DD_CLIENT_API_KEY}" -H "Content-Type: application/json" \
-  -d @- $(echo "$PAYLOAD")
+
 fi
 
 # Removing temporary files
