@@ -108,7 +108,7 @@ else
 EOF
 )
  curl -s -X POST "https://api.datadoghq.com/api/v1/series?api_key=${DD_CLIENT_API_KEY}" -H "Content-Type: application/json" \
-  -d @- "${PAYLOAD}"
+  -d @- $(echo "$PAYLOAD")
 fi
 
 # Removing temporary files
