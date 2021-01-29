@@ -16,7 +16,7 @@ bandit -r -a vuln -ii -ll -x .git,.svn,.mvn,.idea,dist,bin,obj,backup,docs,tests
 # exit ${EXITCODE}
 
 # Print Report on screen to developers
-#cat "${TMP_REPORT}"
+cat "${TMP_REPORT}"
 
 if [ -z ${DD_CLIENT_API_KEY} ] || [ -z ${GITHUB_REPOSITORY} ]
 then
@@ -27,6 +27,88 @@ else
   SEVERITY_HIGH=$(cat ${TMP_REPORT} | jq -r '.metrics._totals."SEVERITY.HIGH"')
   SEVERITY_MEDIUM=$(cat ${TMP_REPORT} | jq -r '.metrics._totals."SEVERITY.MEDIUM"')
   LOC=$(cat ${TMP_REPORT} | jq -r '.metrics._totals.loc')
+
+  # Sending metrics to DataDog
+  curl -s -X POST "https://api.datadoghq.com/api/v1/series?api_key=${DD_CLIENT_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d @- << EOF
+  {
+    "series": [
+      {
+        "metric": "security.sast.execution",
+        "points": [
+          [
+            "${NOW}",
+            1
+          ]
+        ],
+        "tags": [
+            "repo:${GITHUB_REPOSITORY}"
+        ]
+      },
+      {
+        "metric": "security.sast.results.confidence_high",
+        "points": [
+          [
+            "${NOW}",
+            "${CONFIDENCE_HIGH}"
+          ],
+        ],
+        "tags":[
+            "repo:${GITHUB_REPOSITORY}"
+        ]
+      },
+      {
+        "metric": "security.sast.results.confidence_medium",
+        "points": [
+          [
+            "${NOW}",
+            "${CONFIDENCE_MEDIUM}"
+          ]
+        ],
+        "tags":[
+            "repo:${GITHUB_REPOSITORY}"
+        ]
+      },
+      {
+        "metric": "security.sast.results.severity_high",
+        "points": [
+          [
+            "${NOW}",
+            "${SEVERITY_HIGH}"
+          ]
+        ],
+        "tags":[
+            "repo:${GITHUB_REPOSITORY}"
+        ]
+      },
+      {
+        "metric": "security.sast.results.severity_medium",
+        "points": [
+          [
+            "${NOW}",
+            "${SEVERITY_MEDIUM}"
+          ]
+        ],
+        "tags":[
+            "repo:${GITHUB_REPOSITORY}"
+        ]
+      },
+      {
+        "metric": "security.sast.results.loc",
+        "points": [
+          [
+            "${NOW}",
+            "${LOC}"
+          ]
+        ],
+        "tags":[
+            "repo:${GITHUB_REPOSITORY}"
+        ]
+      }
+    ]
+  }
+EOF
 fi
 
 # Removing temporary files
