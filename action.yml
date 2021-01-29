@@ -1,5 +1,11 @@
 name: 'SAST Check'
 description: 'Run SAST checks in your code'
+steps:
+  - name: DataDog API secret
+    with:
+      DD_CLIENT_API_KEY: ${{ secrets.DD_CLIENT_API_KEY }}
+    env:
+      DD_CLIENT_API_KEY: ${{ secrets.DD_CLIENT_API_KEY }}
 inputs:
   path: 
     description: 'Path to run SAST checks on'
@@ -13,5 +19,3 @@ runs:
   image: 'docker/Dockerfile'
   args:
     - ${{ inputs.path }}
-env:
-  DD_CLIENT_API_KEY: ${{ DD_CLIENT_API_KEY }}
