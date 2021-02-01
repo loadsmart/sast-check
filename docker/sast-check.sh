@@ -6,7 +6,7 @@ TMP_REPORT="$(mktemp)"
 # Run Bandit and save report on temporary folder
 set -euo pipefail
 bandit --version
-bandit -r -a vuln -ii -ll -x .git,.svn,.mvn,.idea,dist,bin,obj,backup,docs,tests,test,tmp,reports,venv "$@" -f json -o out/report.json
+bandit -r -a vuln -ii -ll -x .git,.svn,.mvn,.idea,dist,bin,obj,backup,docs,tests,test,tmp,reports,venv "$@" -f json -o report.json
 
 EXITCODE=$?
 # RESULT="${RESULT//'%'/'%25'}"
@@ -115,4 +115,4 @@ fi
 
 # Removing temporary files
 #rm -rf "${TMP_REPORT}"
-rm -rf out/report.json
+rm -rf report.json
