@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -x
 
 export NOW="$(date +%s)"
 TMP_REPORT="$(mktemp)"
