@@ -8,17 +8,16 @@ set -euo pipefail
 bandit --version
 bandit -r -a vuln -ii -ll -x .git,.svn,.mvn,.idea,dist,bin,obj,backup,docs,tests,test,tmp,reports,venv "$@" -f json -o report.json
 
-EXITCODE=$?
+# EXITCODE=$?
 # RESULT="${RESULT//'%'/'%25'}"
 # RESULT="${RESULT//$'\n'/'%0A'}"
 # RESULT="${RESULT//$'\r'/'%0D'}"
 # echo "::set-output name=result::${RESULT}"
-echo "${EXITCODE}"
-
-sleep 5
+# echo "${EXITCODE}"
 
 # Print Report on screen to developers
-cat "${TMP_REPORT}"
+# cat "${TMP_REPORT}"
+cat report.json
 
 if [ -z ${DD_CLIENT_API_KEY} ] || [ -z ${GITHUB_REPOSITORY} ]
 then
