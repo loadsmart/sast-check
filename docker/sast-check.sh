@@ -1,4 +1,4 @@
-#!/bin/sh -x
+#!/bin/sh
 
 export NOW="$(date +%s)"
 TMP_REPORT="$(mktemp)"
@@ -6,7 +6,7 @@ TMP_REPORT="$(mktemp)"
 # Run Bandit and save report on temporary folder
 set -euo pipefail
 bandit --version
-bandit -r -a vuln -ii -ll -x .git,.svn,.mvn,.idea,dist,bin,obj,backup,docs,tests,test,tmp,reports,venv "$@" -f json -o report.json
+bandit -r -a vuln -ii -ll -x .git,.svn,.mvn,.idea,dist,bin,obj,backup,docs,tests,test,tmp,reports,venv "$@" -f json -o "${TMP_REPORT}" --exit-zero
 
 # EXITCODE=$?
 # RESULT="${RESULT//'%'/'%25'}"
@@ -16,8 +16,7 @@ bandit -r -a vuln -ii -ll -x .git,.svn,.mvn,.idea,dist,bin,obj,backup,docs,tests
 # echo "${EXITCODE}"
 
 # Print Report on screen to developers
-# cat "${TMP_REPORT}"
-cat report.json
+cat "${TMP_REPORT}"
 
 if [ -z ${DD_CLIENT_API_KEY} ] || [ -z ${GITHUB_REPOSITORY} ]
 then
@@ -113,5 +112,4 @@ EOF
 fi
 
 # Removing temporary files
-#rm -rf "${TMP_REPORT}"
-rm -rf report.json
+rm -rf "${TMP_REPORT}"
