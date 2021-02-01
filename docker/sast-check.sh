@@ -6,7 +6,7 @@ TMP_REPORT="$(mktemp)"
 # Run Bandit and save report on temporary folder
 set -euo pipefail
 bandit --version
-bandit -d -r -a vuln -ii -ll -x .git,.svn,.mvn,.idea,dist,bin,obj,backup,docs,tests,test,tmp,reports,venv "$@" -f json -o "${TMP_REPORT}"
+bandit -r -a vuln -ii -ll -x .git,.svn,.mvn,.idea,dist,bin,obj,backup,docs,tests,test,tmp,reports,venv "$@" -f json -o "${TMP_REPORT}"
 
 EXITCODE=$?
 # RESULT="${RESULT//'%'/'%25'}"
@@ -14,6 +14,8 @@ EXITCODE=$?
 # RESULT="${RESULT//$'\r'/'%0D'}"
 # echo "::set-output name=result::${RESULT}"
 echo "${EXITCODE}"
+
+sleep 5
 
 # Print Report on screen to developers
 cat "${TMP_REPORT}"
