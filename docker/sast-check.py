@@ -75,7 +75,7 @@ def parse_results(raw):
                 tags['issue_text'] = r['issue_text'][:dd_tag_limit]
                 tags['filename'] = r['filename'][:dd_tag_limit]
                 tags['issue_severity'] = r['issue_severity']
-                tags['line_number'] = r['line_number']
+                tags['line_number'] = str(r['line_number'])
                 tags_copy = tags.copy()
                 vulns.append(tags_copy)
     else:
