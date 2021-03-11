@@ -9,7 +9,7 @@ from datadog import initialize, api
 TMP_REPORT = tempfile.NamedTemporaryFile().name
 GITHUB_REPOSITORY = os.getenv('GITHUB_REPOSITORY')
 DD_CLIENT_API_KEY = os.getenv('DD_CLIENT_API_KEY')
-PROJECT_FOLDER = "."
+PROJECT_FOLDER = "./"
 
 
 
