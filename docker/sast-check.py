@@ -9,14 +9,14 @@ from datadog import initialize, api
 TMP_REPORT = tempfile.NamedTemporaryFile().name
 GITHUB_REPOSITORY = os.getenv('GITHUB_REPOSITORY')
 DD_CLIENT_API_KEY = os.getenv('DD_CLIENT_API_KEY')
-PROJECT_FOLDER = "$@"
+PROJECT_FOLDER = "\"$@\""
 
 
 
 
 def execute_sast():
     report = {}
-    cmd_bandit = "bandit -r -a vuln -ii -ll -x .git,.svn,.mvn,.idea,dist,bin,obj,backup,docs,tests,test,tmp,reports,venv {0} -f json -o {1} --exit-zero".format(PROJECT_FOLDER,TMP_REPORT)
+    cmd_bandit = "/bin/sh bandit -r -a vuln -ii -ll -x .git,.svn,.mvn,.idea,dist,bin,obj,backup,docs,tests,test,tmp,reports,venv {0} -f json -o {1} --exit-zero".format(PROJECT_FOLDER,TMP_REPORT)
     cmd_cat = "cat {0}".format(TMP_REPORT)
     os.system('bandit --version')
     print(cmd_bandit)
