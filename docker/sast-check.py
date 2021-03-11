@@ -76,7 +76,7 @@ def parse_results(raw):
                 tags['line_number'] = r['line_number']
                 tags_copy = tags.copy()
                 vulns.append(tags_copy)
-    else
+    else:
         print("Great, no findings!")
     
     send_metrics(vulns)
