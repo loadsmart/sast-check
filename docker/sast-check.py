@@ -72,12 +72,14 @@ def parse_results(raw):
         for r in raw['results']:
             if r['issue_severity'] == 'HIGH' or 'MEDIUM':
                 tags['repository_name'] = GITHUB_REPOSITORY
+                tags['actor'] = ACTOR
                 tags['test_id'] = r['test_id']
                 tags['test_name'] = r['test_name']
                 tags['issue_text'] = r['issue_text'][:dd_tag_limit]
                 tags['filename'] = r['filename'][:dd_tag_limit]
                 tags['issue_severity'] = r['issue_severity']
                 tags['line_number'] = str(r['line_number'])
+                tags['link_to_file'] = LINK_PREFIX + tags['filename'][1:] + "#" + tags['line_number']
                 tags_copy = tags.copy()
                 vulns.append(tags_copy)
     else:
@@ -92,10 +94,8 @@ def parse_results(raw):
 
 
 def main():
-    #raw_report = execute_sast()
-    #parse_results(raw_report)
-    print(ACTOR)
-    print(LINK_PREFIX)
+    raw_report = execute_sast()
+    parse_results(raw_report)
 
 
 
