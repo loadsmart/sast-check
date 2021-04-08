@@ -90,8 +90,11 @@ def parse_results(raw):
 
 
 def main():
-    raw_report = execute_sast()
-    parse_results(raw_report)
+    #raw_report = execute_sast()
+    #parse_results(raw_report)
+    print(os.getenv('GITHUB_SERVER_URL'))
+    print(os.getenv('GITHUB_WORKSPACE'))
+    print(os.getenv('GITHUB_ACTOR'))
 
 
 
