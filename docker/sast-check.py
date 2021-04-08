@@ -9,6 +9,8 @@ from datadog import initialize, api
 TMP_REPORT = tempfile.NamedTemporaryFile().name
 GITHUB_REPOSITORY = os.getenv('GITHUB_REPOSITORY')
 DD_CLIENT_API_KEY = os.getenv('DD_CLIENT_API_KEY')
+LINK_PREFIX = os.getenv('GITHUB_SERVER_URL') + "/" + os.getenv('GITHUB_REPOSITORY') + "/blob/master/"
+ACTOR = os.getenv('GITHUB_ACTOR')
 PROJECT_FOLDER = "./"
 
 
@@ -92,9 +94,8 @@ def parse_results(raw):
 def main():
     #raw_report = execute_sast()
     #parse_results(raw_report)
-    print(os.getenv('GITHUB_SERVER_URL'))
-    print(os.getenv('GITHUB_WORKSPACE'))
-    print(os.getenv('GITHUB_ACTOR'))
+    print(ACTOR)
+    print(LINK_PREFIX)
 
 
 
