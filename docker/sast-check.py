@@ -56,7 +56,7 @@ def send_metrics(vulns=[]):
                 "filename:" + v['filename'],
                 "issue_severity:" + v['issue_severity'],
                 "line_number:" + v['line_number'],
-                "link_to_file:" + LINK_PREFIX + v['filename'][1:] + "#" + v['line_number']
+                "link_to_file:" + LINK_PREFIX + v['filename'][1:]
             ]
         )
     
