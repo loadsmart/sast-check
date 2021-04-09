@@ -12,6 +12,7 @@ DD_CLIENT_API_KEY = os.getenv('DD_CLIENT_API_KEY')
 LINK_PREFIX = os.getenv('GITHUB_SERVER_URL') + "/" + os.getenv('GITHUB_REPOSITORY') + "/blob/master/"
 ACTOR = os.getenv('GITHUB_ACTOR')
 PROJECT_FOLDER = "./"
+DD_TAG_LIMIT = 199
 
 
 
@@ -21,7 +22,6 @@ def execute_sast():
     cmd_bandit = "bandit -r -a vuln -ii -ll -x .git,.svn,.mvn,.idea,dist,bin,obj,backup,docs,tests,test,tmp,reports,venv {0} -f json -o {1} --exit-zero".format(PROJECT_FOLDER,TMP_REPORT)
     cmd_cat = "cat {0}".format(TMP_REPORT)
     os.system('bandit --version')
-    print(cmd_bandit)
     os.system(cmd_bandit)
     os.system(cmd_cat)
 
@@ -48,13 +48,15 @@ def send_metrics(vulns=[]):
                 (now, 1)
             ],
             tags=[
-                "repo:" + v['repository_name'],
+                "repo:" + GITHUB_REPOSITORY,
+                "actor:" + ACTOR,
                 "test_id:" + v['test_id'],
                 "test_name:" + v['test_name'],
                 "issue_text:" + v['issue_text'],
                 "filename:" + v['filename'],
                 "issue_severity:" + v['issue_severity'],
-                "line_number:" + v['line_number']
+                "line_number:" + v['line_number'],
+                "link_to_file:" + LINK_PREFIX + v['filename'][1:] + "#" + v['line_number']
             ]
         )
     
@@ -64,22 +66,18 @@ def send_metrics(vulns=[]):
 
 
 def parse_results(raw):
-    dd_tag_limit = 199
     tags = {}
     vulns = []
 
     if raw['results']:
         for r in raw['results']:
             if r['issue_severity'] == 'HIGH' or 'MEDIUM':
-                tags['repository_name'] = GITHUB_REPOSITORY
-                tags['actor'] = ACTOR
                 tags['test_id'] = r['test_id']
                 tags['test_name'] = r['test_name']
-                tags['issue_text'] = r['issue_text'][:dd_tag_limit]
-                tags['filename'] = r['filename'][:dd_tag_limit]
+                tags['issue_text'] = r['issue_text'][:DD_TAG_LIMIT]
+                tags['filename'] = r['filename'][:DD_TAG_LIMIT]
                 tags['issue_severity'] = r['issue_severity']
                 tags['line_number'] = str(r['line_number'])
-                tags['link_to_file'] = LINK_PREFIX + tags['filename'][1:] + "#" + tags['line_number']
                 tags_copy = tags.copy()
                 vulns.append(tags_copy)
     else:
