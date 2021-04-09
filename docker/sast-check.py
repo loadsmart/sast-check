@@ -9,7 +9,7 @@ from datadog import initialize, api
 TMP_REPORT = tempfile.NamedTemporaryFile().name
 GITHUB_REPOSITORY = os.getenv('GITHUB_REPOSITORY')
 DD_CLIENT_API_KEY = os.getenv('DD_CLIENT_API_KEY')
-LINK_PREFIX = os.getenv('GITHUB_SERVER_URL') + "/" + os.getenv('GITHUB_REPOSITORY') + "/blob/master/"
+LINK_PREFIX = os.getenv('GITHUB_SERVER_URL') + "/" + os.getenv('GITHUB_REPOSITORY') + "/blob/master"
 ACTOR = os.getenv('GITHUB_ACTOR')
 PROJECT_FOLDER = "./"
 DD_TAG_LIMIT = 199
