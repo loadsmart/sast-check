@@ -1,0 +1,13 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: sast-check
+  description: sast-check project repository
+  annotations:
+    github.com/project-slug: loadsmart/sast-check
+  tags:
+    - python
+spec:
+  type: other
+  lifecycle: production
+  owner: <CODE-OWNER>
